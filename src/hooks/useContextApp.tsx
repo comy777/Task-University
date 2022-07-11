@@ -21,10 +21,19 @@ const useContextApp = () => {
 	} = useContext(AppContext);
 	const theme = useColorScheme();
 	const handleGetTheme = async () => {
-		const theme = await getData('themeDark');
-		if (theme === 'dark') {
+		const themeStorage = await getData('themeDark');
+		if (themeStorage === 'dark') {
 			setThemeSystem();
 			setTheme();
+		} else {
+			if (themeSystem) {
+				if (theme === 'dark') {
+					if (!themeDark) setTheme();
+				}
+				if (theme === 'light') {
+					if (themeDark) setTheme();
+				}
+			}
 		}
 	};
 	const handleSetTheme = async (type: string) => {

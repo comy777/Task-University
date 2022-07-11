@@ -15,14 +15,6 @@ const AppRoutes = () => {
 	useEffect(
 		() => {
 			handleGetTheme();
-			if (themeSystem) {
-				if (theme === 'dark') {
-					if (!themeDark) setTheme();
-				}
-				if (theme === 'light') {
-					if (themeDark) setTheme();
-				}
-			}
 		},
 		[ theme ]
 	);
