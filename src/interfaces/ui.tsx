@@ -18,6 +18,8 @@ export interface StateUiProps {
   editable: boolean;
   setEditable: () => void;
   restoreUser: () => void;
+  searchVisible: boolean;
+  setSearchVisible: (visible: boolean) => void;
 }
 
 export interface StateUi {
@@ -28,6 +30,7 @@ export interface StateUi {
   user: User | undefined;
   themeSystem: boolean;
   editable: boolean;
+  searchVisible: boolean;
 }
 
 export const uiInitialState: StateUi = {
@@ -38,6 +41,7 @@ export const uiInitialState: StateUi = {
   user: undefined,
   themeSystem: true,
   editable: false,
+  searchVisible: true,
 };
 
 export type UiActions =
@@ -48,4 +52,5 @@ export type UiActions =
   | {type: 'set user'; payload: {user: User}}
   | {type: 'set theme system'}
   | {type: 'set editable'}
-  | {type: 'restore user'};
+  | {type: 'restore user'}
+  | {type: 'set search visible'; payload: {visible: boolean}};

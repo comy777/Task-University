@@ -13,6 +13,10 @@ const useReducerUi = () => {
   const setUser = (user: User) => dispatch({type: 'set user', payload: {user}});
   const setThemeSystem = () => dispatch({type: 'set theme system'});
   const setEditable = () => dispatch({type: 'set editable'});
+  const restoreUser = () => dispatch({type: 'restore user'});
+  const setSearchVisible = (visible: boolean) =>
+    dispatch({type: 'set search visible', payload: {visible}});
+
   return {
     uiState,
     setTheme,
@@ -22,6 +26,8 @@ const useReducerUi = () => {
     setUser,
     setThemeSystem,
     setEditable,
+    restoreUser,
+    setSearchVisible,
   };
 };
 

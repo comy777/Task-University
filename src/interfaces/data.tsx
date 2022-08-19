@@ -47,6 +47,7 @@ export interface ValidateDays {
   setDays: (days: DayProps[]) => void;
   schedlue: string;
   selected: boolean;
+  classroom: string;
 }
 
 export interface AlertProps {

@@ -15,10 +15,11 @@ import {
   setDataDays,
 } from '../utils/validate';
 import {Lesson} from '../interfaces/response';
-import {DayProps} from '../interfaces/components';
+import {DayProps, ScreenStack} from '../interfaces/components';
 import {DataLessonSave} from '../interfaces/data';
 import {showAlert} from '../utils/toast';
 import {useNavigation} from '@react-navigation/native';
+import {dataDays} from '../utils/storage';
 
 const useApp = (data?: Lesson) => {
   const navigation = useNavigation();
@@ -43,15 +44,9 @@ const useApp = (data?: Lesson) => {
   } = useContextApp();
   const {styles, colors} = useStyles();
   const form = formDataApp('lesson');
-  const {
-    lesson,
-    teacher,
-    nrc,
-    classroom,
-    handleChangeText,
-    reset,
-    resetFormValues,
-  } = useForm(form);
+  const {lesson, teacher, nrc, handleChangeText, reset, resetFormValues} =
+    useForm(form);
+
   const handleGetLessons = async () => {
     setLoading();
     const user = await authUserRequest('get');
@@ -69,14 +64,23 @@ const useApp = (data?: Lesson) => {
       setDays,
       schedlue,
       selected: true,
+      classroom: '',
     });
     if (validate) return;
     setDay(day);
     setChildren('lesson');
     setModal();
   };
-  const handleSaveSchedlue = () => {
-    setDataDays({days, day, setDays, schedlue, selected: false});
+  const handleSaveSchedlue = (classroom: string) => {
+    const data = classroom ? classroom : 'salon';
+    setDataDays({
+      days,
+      day,
+      setDays,
+      schedlue: `${data} ${schedlue}`,
+      selected: false,
+      classroom,
+    });
     setModal();
   };
   const handleSaveLesson = async () => {
@@ -85,7 +89,7 @@ const useApp = (data?: Lesson) => {
       lesson,
       teacher,
       nrc,
-      classroom,
+      classroom: '',
       schedlue: dataDays,
     });
     if (!validate) return;
@@ -123,6 +127,9 @@ const useApp = (data?: Lesson) => {
     setLessons(newLessons);
     reset();
     restoreLesson();
+    if (newLessons.length === 0) {
+      await appGetLessons('lessons');
+    }
     navigation.goBack();
   };
   const showHandleDelete = () => {
@@ -135,21 +142,20 @@ const useApp = (data?: Lesson) => {
   const handleActive = (data: Lesson) => {
     const {lesson, teacher, nrc, schedlue, classroom} = data;
     const dataSchedlue: DayProps[] = [];
-    days.map((item, index) => {
+    dataDays.forEach((item, index) => {
       let dataDay: any = null;
-      schedlue.map(day => {
+      schedlue.forEach(day => {
         if (day.day === item.day) {
-          dataSchedlue[index] = {...item, selected: true, schedlue: day.hours};
           dataDay = {...item, selected: true, schedlue: day.hours};
           return;
         }
       });
       dataDay ? (dataSchedlue[index] = dataDay) : (dataSchedlue[index] = item);
     });
-    resetFormValues({lesson, teacher, nrc: nrc.toString(), classroom});
+    resetFormValues({lesson, teacher, nrc: nrc.toString()});
     setDays(dataSchedlue);
   };
-  const handleNavigate = (screen: string) => {
+  const handleNavigate = (screen: ScreenStack) => {
     if (!data) return;
     navigation.navigate(screen, {id: data._id});
   };
@@ -163,7 +169,6 @@ const useApp = (data?: Lesson) => {
     teacher,
     lesson,
     nrc,
-    classroom,
     handleChangeText,
     handleChangeDay,
     day,

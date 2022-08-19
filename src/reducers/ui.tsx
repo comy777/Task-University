@@ -43,6 +43,11 @@ export const uiReducer = (state: StateUi, action: UiActions): StateUi => {
         token: undefined,
         user: undefined,
       };
+    case 'set search visible':
+      return {
+        ...state,
+        searchVisible: action.payload.visible,
+      };
     default:
       return state;
   }

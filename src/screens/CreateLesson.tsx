@@ -1,5 +1,5 @@
-import {View, TextInput} from 'react-native';
 import React, {useEffect} from 'react';
+import {View, TextInput, KeyboardAvoidingView} from 'react-native';
 import useApp from '../hooks/useApp';
 import {DaysComponent} from '../components/Day';
 import Fab from '../components/Fab';
@@ -12,7 +12,6 @@ const CreateLesson = ({route}: LessonScreenProps) => {
     teacher,
     lesson,
     nrc,
-    classroom,
     handleChangeText,
     handleChangeDay,
     handleSaveLesson,
@@ -35,7 +34,7 @@ const CreateLesson = ({route}: LessonScreenProps) => {
     }
   }, [route.params]);
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView style={styles.container}>
       <TextInput
         placeholder="Clase"
         style={styles.inputContainer}
@@ -48,13 +47,6 @@ const CreateLesson = ({route}: LessonScreenProps) => {
         style={styles.inputContainer}
         value={teacher}
         onChangeText={value => handleChangeText(value, 'teacher')}
-        placeholderTextColor={styles.textColorTheme.color}
-      />
-      <TextInput
-        placeholder="Salón"
-        style={styles.inputContainer}
-        value={classroom}
-        onChangeText={value => handleChangeText(value, 'classroom')}
         placeholderTextColor={styles.textColorTheme.color}
       />
       <TextInput
@@ -88,7 +80,7 @@ const CreateLesson = ({route}: LessonScreenProps) => {
         onPress={handleSaveLesson}
         loading={loading}
       />
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 

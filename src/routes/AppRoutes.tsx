@@ -1,35 +1,30 @@
-import React, { useEffect } from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+import React, {useEffect} from 'react';
+import {NavigationContainer} from '@react-navigation/native';
 import AuthRoutes from './AuthRoutes';
-import Header from '../components/Header';
-import { Dark, Default } from '../theme/theme';
+import {Dark, Default} from '../theme/theme';
 import useContextApp from '../hooks/useContextApp';
 import BottomRoutes from './BottomRoutes';
-import { useColorScheme } from 'react-native';
 import useUser from '../hooks/useUser';
+import {useColorScheme} from 'react-native';
+import TaskRoutes from './TaskRoutes';
+import Header from '../components/Header';
 
 const AppRoutes = () => {
-	const { themeDark, token, setTheme, handleGetTheme, themeSystem } = useContextApp();
-	const theme = useColorScheme();
-	const { handleGetToken } = useUser();
-	useEffect(
-		() => {
-			handleGetTheme();
-		},
-		[ theme ]
-	);
-	useEffect(
-		() => {
-			handleGetToken();
-		},
-		[ token ]
-	);
-	return (
-		<NavigationContainer theme={themeDark ? Dark : Default}>
-			<Header />
-			{token ? <BottomRoutes /> : <AuthRoutes />}
-		</NavigationContainer>
-	);
+  const {themeDark, token, handleGetTheme} = useContextApp();
+  const {handleGetToken} = useUser();
+  const theme = useColorScheme();
+  useEffect(() => {
+    handleGetToken();
+  }, [token]);
+  useEffect(() => {
+    handleGetTheme();
+  }, [theme]);
+  return (
+    <NavigationContainer theme={themeDark ? Dark : Default}>
+      <Header />
+      {token ? <TaskRoutes /> : <AuthRoutes />}
+    </NavigationContainer>
+  );
 };
 
 export default AppRoutes;

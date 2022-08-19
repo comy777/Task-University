@@ -8,6 +8,7 @@ import {
 import {showToast} from './toast';
 import {DayProps} from '../interfaces/components';
 import {Schedlue} from '../interfaces/response';
+import moment from 'moment';
 
 export const formDataAuth = (value: string) => {
   const form =
@@ -20,7 +21,7 @@ export const formDataAuth = (value: string) => {
 export const formDataApp = (value: string) => {
   const form =
     value === 'lesson'
-      ? {lesson: '', teacher: '', nrc: '', classroom: ''}
+      ? {lesson: '', teacher: '', nrc: ''}
       : {email: '', password: '', repeatPassword: '', username: ''};
   return form;
 };
@@ -67,7 +68,13 @@ export const validateLesson = ({
     showToast('La clase debe tener un horario');
     return false;
   }
-  return {lesson, teacher, nrc, schedlue, classroom};
+  return {
+    lesson,
+    teacher,
+    nrc,
+    schedlue,
+    classroom,
+  };
 };
 
 export const setDataDays = ({
@@ -76,6 +83,7 @@ export const setDataDays = ({
   setDays,
   schedlue,
   selected,
+  classroom,
 }: ValidateDays) => {
   let bandera = false;
   if (selected) {
@@ -83,7 +91,7 @@ export const setDataDays = ({
       if (item.day === day) {
         if (item.selected) {
           const newDays = days.map(item =>
-            item.day === day ? {...item, selected: !item.selected} : item,
+            item.day === day ? {...item, selected: false} : {...item},
           );
           setDays(newDays);
           bandera = true;
@@ -92,7 +100,7 @@ export const setDataDays = ({
     });
   } else {
     const newDays = days.map(item =>
-      item.day === day ? {...item, selected: true, schedlue} : item,
+      item.day === day ? {...item, selected: true, schedlue} : {...item},
     );
     setDays(newDays);
   }
@@ -104,7 +112,11 @@ export const getDaysValidate = (data: DayProps[]) => {
   let contador = 0;
   data.map((item, i) => {
     if (item.selected) {
-      resp[contador] = {day: item.day, hours: item.schedlue};
+      resp[contador] = {
+        day: item.day,
+        hours: item.schedlue,
+        classroom: item.classroom,
+      };
       contador += 1;
     }
   });
@@ -123,4 +135,11 @@ export const validateTask = ({title, body, dayLimit, images}: DataTaskSave) => {
     return false;
   }
   return {title, body, images, dayLimit};
+};
+
+export const validateDayLimit = (dayLimit: string): string => {
+  const newDate = moment(dayLimit);
+  const diferencia = newDate.diff(new Date(Date.now()), 'days');
+  if (diferencia <= 5) return '#FF5252';
+  return '#FF9800';
 };
