@@ -1,10 +1,12 @@
 import React, {useEffect} from 'react';
-import {ScrollView, TextInput, KeyboardAvoidingView} from 'react-native';
+import {ScrollView, TextInput, KeyboardAvoidingView, View} from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
 import Fab from '../components/Fab';
 import useStyles from '../hooks/useStyles';
 import useNotes from '../hooks/useNotes';
 import ImageComponent from '../components/ImageComponent';
 import {CreateNoteScreenProps} from '../interfaces/components';
+import ColorComponent from '../components/ColorComponent';
 
 const CreateNote = ({route}: CreateNoteScreenProps) => {
   const {styles} = useStyles();
@@ -21,6 +23,12 @@ const CreateNote = ({route}: CreateNoteScreenProps) => {
     handleSave,
     loading,
     handleActiveNote,
+    setVisibleFab,
+    visibleFab,
+    visibleColor,
+    handleSetColor,
+    setColor,
+    color,
   } = useNotes();
   useEffect(() => {
     if (route.params.note) {
@@ -29,7 +37,7 @@ const CreateNote = ({route}: CreateNoteScreenProps) => {
   }, [route.params.note]);
   return (
     <KeyboardAvoidingView style={{flex: 1}}>
-      <ScrollView style={{...styles.container}}>
+      <ScrollView style={{...styles.container, backgroundColor: color}}>
         <TextInput
           placeholder="Titulo"
           style={styles.inputContainer}
@@ -56,11 +64,16 @@ const CreateNote = ({route}: CreateNoteScreenProps) => {
           style={{...styles.textColorTheme, marginBottom: 100}}
         />
       </ScrollView>
+      {visibleColor && <ColorComponent setColor={setColor} color={color} />}
       <Fab
-        icon="add"
+        icon={visibleFab ? 'close-outline' : 'add'}
         style={styles.fabContainerBottom}
-        onPress={() => handleSave(route.params.lesson, route.params.note)}
+        onPress={setVisibleFab}
         loading={loading}
+        fabNote={visibleFab}
+        handleSave={() => handleSave(route.params.lesson, route.params.note)}
+        handleColor={handleSetColor}
+        styleBg={visibleFab}
       />
     </KeyboardAvoidingView>
   );

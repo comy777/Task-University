@@ -32,6 +32,8 @@ const useReducerApp = () => {
     dispatch({type: 'set visible date picker'});
   const setDatePicker = (data: string) =>
     dispatch({type: 'set date picker', payload: {data}});
+  const setVisibleColor = () => dispatch({type: 'set color visible'});
+
   return {
     taskState,
     setLoading,
@@ -49,6 +51,7 @@ const useReducerApp = () => {
     setVisibleFab,
     setVisibleDatePicker,
     setDatePicker,
+    setVisibleColor,
   };
 };
 

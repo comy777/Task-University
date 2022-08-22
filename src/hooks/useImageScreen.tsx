@@ -19,7 +19,7 @@ const useImageScreen = ({images, image}: Props) => {
   const topRef: LegacyRef<FlatList> = useRef(null);
   const timmerImages = useRef(false);
   const {fadeAnim, fadeIn, fadeOut} = useAnimation();
-  const {width, colors} = useStyles();
+  const {width, styles} = useStyles();
   const getIndex = () => {
     images.forEach((item, index) => {
       if (item.uri) {
@@ -69,9 +69,9 @@ const useImageScreen = ({images, image}: Props) => {
     thumpRef,
     topRef,
     fadeAnim,
-    colors,
     onPress,
     setActiveIndex,
+    styles,
   };
 };
 

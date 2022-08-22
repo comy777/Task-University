@@ -11,10 +11,10 @@ export const Notes = ({notes}: NotesComponentProps) => {
   const {handleActiveData} = useNotes();
   const {styles} = useStyles();
   const NoteComponent = ({note, onPress}: NoteComponentProps) => {
-    const {title, body} = note;
+    const {title, body, color} = note;
     return (
       <TouchableOpacity activeOpacity={0.7} onPress={() => onPress(note)}>
-        <View style={styles.cardNote}>
+        <View style={{...styles.cardNote, backgroundColor: color}}>
           <Text style={{textAlign: 'center', fontWeight: 'bold'}}>{title}</Text>
           <Text numberOfLines={12}>{body}</Text>
         </View>

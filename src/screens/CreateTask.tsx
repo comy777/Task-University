@@ -68,6 +68,7 @@ const CreateTask = ({route}: CreateTaskScreenProps) => {
       </ScrollView>
       <Fab
         icon={visibleFab ? 'close-outline' : 'add'}
+        styleBg={visibleFab}
         style={styles.fabContainerBottom}
         fabGroup={visibleFab}
         onPress={setVisibleFab}

@@ -35,7 +35,9 @@ export const AppContextProvider = ({children}: any) => {
     setVisibleFab,
     setVisibleDatePicker,
     setDatePicker,
+    setVisibleColor,
   } = useReducerApp();
+
   return (
     <AppContext.Provider
       value={{
@@ -66,6 +68,7 @@ export const AppContextProvider = ({children}: any) => {
           setVisibleFab,
           setVisibleDatePicker,
           setDatePicker,
+          setVisibleColor,
         },
       }}>
       {children}

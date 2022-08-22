@@ -65,7 +65,7 @@ const useStyles = () => {
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
-      marginBottom: 15,
+      marginTop: 15,
     },
     btnContainer: {
       height: 70,
@@ -158,7 +158,6 @@ const useStyles = () => {
     cardNote: {
       height: 280,
       width: width / 2 - 25,
-      backgroundColor: colors.primary,
       margin: 5,
       padding: 15,
     },
@@ -271,6 +270,20 @@ const useStyles = () => {
       borderColor: colors.primary,
       borderRadius: 15,
       marginBottom: 5,
+    },
+    colorContainer: {
+      height: 345,
+      width: 375,
+      backgroundColor: 'white',
+      marginHorizontal: 15,
+      padding: 5,
+    },
+    imageScreenBg: {flex: 1, backgroundColor: colors.background},
+    imageBottomScreen: {
+      height: 80,
+      width: 80,
+      marginRight: 10,
+      borderRadius: 12,
     },
   });
   return {

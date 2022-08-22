@@ -27,6 +27,7 @@ export interface DataNoteSave {
   title?: string;
   body?: string;
   images: Image[];
+  color?: string;
 }
 
 export interface DataTaskSave {

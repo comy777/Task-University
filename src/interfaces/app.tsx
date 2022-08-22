@@ -33,6 +33,8 @@ export interface StateAppProps {
   setVisibleDatePicker: () => void;
   datePicker: string | null;
   setDatePicker: (data: string) => void;
+  visibleColor: boolean;
+  setVisibleColor: () => void;
 }
 
 export interface StateApp {
@@ -50,6 +52,7 @@ export interface StateApp {
   visibleFab: boolean;
   visibleDatePicker: boolean;
   datePicker: string | null;
+  visibleColor: boolean;
 }
 
 export const appInitialState: StateApp = {
@@ -67,6 +70,7 @@ export const appInitialState: StateApp = {
   visibleFab: false,
   visibleDatePicker: false,
   datePicker: null,
+  visibleColor: false,
 };
 
 export type AppActions =
@@ -84,4 +88,5 @@ export type AppActions =
   | {type: 'set active data'; payload: {data: ActiveData}}
   | {type: 'set visible fab'}
   | {type: 'set visible date picker'}
-  | {type: 'set date picker'; payload: {data: string}};
+  | {type: 'set date picker'; payload: {data: string}}
+  | {type: 'set color visible'};

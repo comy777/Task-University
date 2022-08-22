@@ -92,6 +92,7 @@ export interface Note {
   createdAt: string;
   updatedAt: string;
   type: string;
+  color: string;
 }
 
 export interface Image {

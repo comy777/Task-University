@@ -7,7 +7,6 @@ import useImageScreen from '../hooks/useImageScreen';
 const ImageScreen = ({route}: ImageScreenProps) => {
   const {images, image} = route.params;
   const {
-    colors,
     topRef,
     thumpRef,
     index,
@@ -15,9 +14,10 @@ const ImageScreen = ({route}: ImageScreenProps) => {
     fadeAnim,
     disabled,
     setActiveIndex,
+    styles,
   } = useImageScreen({images, image});
   return (
-    <View style={{flex: 1, backgroundColor: colors.background}}>
+    <View style={styles.imageScreenBg}>
       <FlatList
         ref={topRef}
         data={images}
@@ -27,7 +27,6 @@ const ImageScreen = ({route}: ImageScreenProps) => {
         pagingEnabled
         initialScrollIndex={index}
         onTouchStart={onPress}
-        onTouchEnd={() => console.log('first')}
         renderItem={({item}) => (
           <View
             style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
@@ -54,12 +53,7 @@ const ImageScreen = ({route}: ImageScreenProps) => {
               onPress={() => setActiveIndex(index)}>
               <Image
                 source={{uri: item.uri}}
-                style={{
-                  height: 80,
-                  width: 80,
-                  marginRight: 10,
-                  borderRadius: 12,
-                }}
+                style={styles.imageBottomScreen}
               />
             </TouchableOpacity>
           )}

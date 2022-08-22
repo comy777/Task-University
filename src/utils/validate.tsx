@@ -123,9 +123,9 @@ export const getDaysValidate = (data: DayProps[]) => {
   return resp;
 };
 
-export const validateNote = ({title, body, images}: DataNoteSave) => {
+export const validateNote = ({title, body, images, color}: DataNoteSave) => {
   if (!title && !body && images.length === 0) return false;
-  return {title, body, images};
+  return {title, body, images, color};
 };
 
 export const validateTask = ({title, body, dayLimit, images}: DataTaskSave) => {

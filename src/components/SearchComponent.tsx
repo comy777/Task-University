@@ -6,8 +6,20 @@ import useDebounce from '../hooks/useDebounce';
 import {SearchResponse} from '../interfaces/response';
 import useStyles from '../hooks/useStyles';
 
+interface Props {
+  item: string;
+}
+
 const SearchComponent = () => {
-  const {input, handleChangeText, data, handleClick} = useDebounce();
+  const {
+    input,
+    handleChangeText,
+    data,
+    handleClick,
+    history,
+    handleSearchHistory,
+    handleDeleteHistoryItem,
+  } = useDebounce();
   const {styles, colors} = useStyles();
   const CardSearch = (item: SearchResponse) => {
     const {type, title} = item;
@@ -20,6 +32,25 @@ const SearchComponent = () => {
               <Text style={{fontWeight: 'bold'}}>{type.toUpperCase()}</Text>
             </View>
             <Icon name="search" size={24} />
+          </View>
+        </TouchableOpacity>
+      ),
+      [item],
+    );
+  };
+  const CardHistory = ({item}: Props) => {
+    return useMemo(
+      () => (
+        <TouchableOpacity onPress={() => handleSearchHistory(item)}>
+          <View style={styles.inputSearch}>
+            <View>
+              <Text style={{fontWeight: 'bold'}}>{item}</Text>
+            </View>
+            <Icon
+              name="close"
+              size={24}
+              onPress={() => handleDeleteHistoryItem(item)}
+            />
           </View>
         </TouchableOpacity>
       ),
@@ -40,6 +71,13 @@ const SearchComponent = () => {
         </View>
       </View>
       <View></View>
+      {!input && (
+        <FlatList
+          data={history}
+          keyExtractor={(item, i) => i.toString()}
+          renderItem={({item}) => <CardHistory item={item} />}
+        />
+      )}
       <FlatList
         data={data}
         keyExtractor={(item, i) => i.toString()}

@@ -21,9 +21,11 @@ import {useNavigation} from '@react-navigation/native';
 import {showAlert} from '../utils/toast';
 import moment from 'moment';
 import {appPutTasks, appPutNotes} from '../api/request';
+import {useState} from 'react';
 
 const useNotes = () => {
   const navigation = useNavigation();
+  const [color, setColor] = useState('white');
   const {
     loading,
     setLoading,
@@ -41,6 +43,8 @@ const useNotes = () => {
     setDatePicker,
     setVisibleDatePicker,
     visibleDatePicker,
+    setVisibleColor,
+    visibleColor,
   } = useContextApp();
   const {title, body, handleChangeText, reset, resetFormValues} = useForm({
     title: '',
@@ -86,7 +90,9 @@ const useNotes = () => {
     const resp = await appPostNotes(`notes/${id}`, data);
     setLoading();
     if (!resp) return;
+    setColor('white');
     setNotes([...notes, resp]);
+    setVisibleFab();
     reset();
     resetImages();
   };
@@ -118,7 +124,7 @@ const useNotes = () => {
     task?: Task,
     saveTask?: boolean,
   ) => {
-    let data: DataNoteSave = {title, body, images: []};
+    let data: DataNoteSave = {title, body, images: [], color};
     let dataTask: DataTaskSave = {
       title,
       body,
@@ -157,6 +163,8 @@ const useNotes = () => {
       const resp = await appPutNotes(`notes/${id}`, data);
       setLoading();
       if (!resp) return;
+      setColor('white');
+      setVisibleFab();
       const newNotes = notes.map(item => (item._id === resp._id ? resp : item));
       setNotes(newNotes);
     }
@@ -186,7 +194,8 @@ const useNotes = () => {
   const handleActiveNote = (note?: Note, task?: Task) => {
     let data = {title: '', body: ''};
     if (note) {
-      const {title, body, images} = note;
+      const {title, body, images, color} = note;
+      setColor(color);
       getImages(images);
       data = {title, body};
       setActiveImages(note.images);
@@ -278,6 +287,10 @@ const useNotes = () => {
     );
     setTasks(newTasks);
   };
+  const handleSetColor = () => {
+    setVisibleFab();
+    setVisibleColor();
+  };
 
   return {
     loading,
@@ -308,6 +321,10 @@ const useNotes = () => {
     setVisibleDatePicker,
     handleComplete,
     datePicker,
+    handleSetColor,
+    visibleColor,
+    color,
+    setColor,
   };
 };
 

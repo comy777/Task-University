@@ -28,10 +28,13 @@ export interface FabProps {
   onPress?: () => void;
   loading?: boolean;
   fabGroup?: boolean;
+  fabNote?: boolean;
+  styleBg?: boolean;
   handleSave?: () => void;
   handleCamera?: () => void;
   handleGalery?: () => void;
   handleCalendar?: () => void;
+  handleColor?: () => void;
 }
 
 export interface LoadingComponentProps {
@@ -122,6 +125,15 @@ export interface UserComponentProps {
 export interface DataList {
   title: string;
   data: string[];
+}
+
+export interface ColorComponentProps {
+  setColor: (color: string) => void;
+  color: string;
+}
+
+export interface ColorProps {
+  colorItem: string;
 }
 
 export type ScreenStack = 'note stack' | 'task stack';
