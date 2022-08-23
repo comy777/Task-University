@@ -1,9 +1,9 @@
 import React, {useEffect} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
+import SplashScreen from 'react-native-splash-screen';
 import AuthRoutes from './AuthRoutes';
 import {Dark, Default} from '../theme/theme';
 import useContextApp from '../hooks/useContextApp';
-import BottomRoutes from './BottomRoutes';
 import useUser from '../hooks/useUser';
 import {useColorScheme} from 'react-native';
 import TaskRoutes from './TaskRoutes';
@@ -14,11 +14,15 @@ const AppRoutes = () => {
   const {handleGetToken} = useUser();
   const theme = useColorScheme();
   useEffect(() => {
+    SplashScreen.hide();
+  }, []);
+  useEffect(() => {
     handleGetToken();
   }, [token]);
   useEffect(() => {
     handleGetTheme();
   }, [theme]);
+
   return (
     <NavigationContainer theme={themeDark ? Dark : Default}>
       <Header />
