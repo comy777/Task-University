@@ -1,4 +1,5 @@
-package com.task;
+//package com.task;
+package com.sebastiancarrillochacon.taskuniversity;
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
 
 import android.app.Application;
@@ -10,7 +11,8 @@ import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.config.ReactFeatureFlags;
 import com.facebook.soloader.SoLoader;
-import com.task.newarchitecture.MainApplicationReactNativeHost;
+//import com.task.newarchitecture.MainApplicationReactNativeHost;
+import com.sebastiancarrillochacon.taskuniversity.newarchitecture.MainApplicationReactNativeHost;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 

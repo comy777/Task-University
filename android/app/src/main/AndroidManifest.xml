@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-  package="com.task">
+  package="com.sebastiancarrillochacon.taskuniversity">
 
     <uses-permission android:name="android.permission.INTERNET" />
 

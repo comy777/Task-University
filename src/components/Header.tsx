@@ -12,7 +12,7 @@ const Header = () => {
   const handleNavigate = () => navigation.navigate('search screen');
   return (
     <View style={styles.header}>
-      <Text style={styles.headerText}>Task App</Text>
+      <Text style={styles.headerText}>Task University</Text>
       <View style={{flexDirection: 'row', alignItems: 'center'}}>
         {searchVisible && (
           <View style={styles.iconSearch}>

@@ -1,4 +1,5 @@
-package com.task.newarchitecture;
+//package com.task.newarchitecture;
+package com.sebastiancarrillochacon.taskuniversity.newarchitecture;
 
 import android.app.Application;
 import androidx.annotation.NonNull;
@@ -19,9 +20,12 @@ import com.facebook.react.fabric.CoreComponentsRegistry;
 import com.facebook.react.fabric.FabricJSIModuleProvider;
 import com.facebook.react.fabric.ReactNativeConfig;
 import com.facebook.react.uimanager.ViewManagerRegistry;
-import com.task.BuildConfig;
-import com.task.newarchitecture.components.MainComponentsRegistry;
-import com.task.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
+// import com.task.BuildConfig;
+// import com.task.newarchitecture.components.MainComponentsRegistry;
+// import com.task.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
+import com.sebastiancarrillochacon.taskuniversity.BuildConfig;
+import com.sebastiancarrillochacon.taskuniversity.newarchitecture.components.MainComponentsRegistry;
+import com.sebastiancarrillochacon.taskuniversity.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -1,4 +1,5 @@
-package com.task;
+// package com.task;
+package com.sebastiancarrillochacon.taskuniversity;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
