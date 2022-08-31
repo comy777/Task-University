@@ -2,7 +2,10 @@ import {apiTask} from './config';
 import {
   AuthResponse,
   DeleteResponse,
+  File,
+  FileResponse,
   GetResponse,
+  Meet,
   SchedlueResponse,
   UserResponse,
 } from '../interfaces/response';
@@ -15,7 +18,13 @@ import {
 } from '../interfaces/data';
 import {saveData} from '../utils/storage';
 import {showToast} from '../utils/toast';
-import {SearchResponse} from '../interfaces/response';
+import {
+  SearchResponse,
+  MeetsResponse,
+  GetIcon,
+  FilesResponse,
+} from '../interfaces/response';
+import {DataMeetForm} from '../interfaces/data';
 import {
   Note,
   Task,
@@ -96,6 +105,11 @@ const ordenar = (a: Task, b: Task) => {
 export const appGetSchedlue = async (): Promise<SchedlueResponse> => {
   const resp = await apiTask.get<SchedlueResponse>('schedlue');
   return resp.data;
+};
+
+export const appGetMeets = async (): Promise<Meet[]> => {
+  const resp = await apiTask.get('meets');
+  return resp.data.meets;
 };
 
 export const appPostRequest = async (
@@ -193,4 +207,81 @@ export const appDeleteRequest = async (url: string) => {
 export const appSearch = async (search: string): Promise<SearchResponse[]> => {
   const resp = await apiTask.get<SearchResponse[]>(`/search/${search}`);
   return resp.data;
+};
+
+const appMeetsRequest = async (
+  url: string,
+  type: string,
+  data: DataMeetForm,
+) => {
+  const request =
+    type === 'post'
+      ? await apiTask.post<MeetsResponse>(url, data)
+      : await apiTask.put<MeetsResponse>(url, data);
+  const resp = await request;
+  if (resp.data.error) {
+    showToast(resp.data.error);
+    return;
+  }
+  if (resp.data.msg) {
+    showToast(resp.data.msg);
+    return;
+  }
+  return resp.data.meet;
+};
+
+export const appPostMeet = async (
+  data: DataMeetForm,
+): Promise<Meet | undefined> => {
+  const resp = await appMeetsRequest('meets/', 'post', data);
+  return resp;
+};
+
+export const appPutMeet = async (
+  data: DataMeetForm,
+  id: string,
+): Promise<Meet | undefined> => {
+  const resp = await appMeetsRequest(`meets/${id}`, 'put', data);
+  return resp;
+};
+
+export const getFaticons = async (query: string): Promise<GetIcon> => {
+  const {data} = await apiTask.get<GetIcon>(`faticon/${query}`);
+  const {icon} = data;
+  return {icon};
+};
+export const appFilesRequest = async (id: string) => {
+  const {data} = await apiTask.get<FilesResponse>(`upload/file/${id}`);
+  return data.files;
+};
+
+export const appFilesPostRequest = async (
+  id: string,
+  file: FormData,
+): Promise<File | undefined> => {
+  const {data} = await apiTask.post<FileResponse>(`upload/file/${id}`, file);
+  if (data.error) {
+    showToast(data.error);
+    return;
+  }
+  showToast('Archivo guardado');
+  return data.file;
+};
+
+export const appFilesDeleteRequest = async (id: string): Promise<boolean> => {
+  const {data} = await apiTask.delete<DefaultResponse>(`upload/file/${id}`);
+  if (data.error) {
+    showToast(data.error);
+    return false;
+  }
+  if (data.msg) {
+    showToast(data.msg);
+    return true;
+  }
+  return false;
+};
+
+export const appGetFileDownload = async (link: string) => {
+  const resp = await apiTask.get(link);
+  console.log(resp.data);
 };

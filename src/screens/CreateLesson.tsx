@@ -61,8 +61,21 @@ const CreateLesson = ({route}: LessonScreenProps) => {
       {route.params && (
         <View>
           <View style={{flexDirection: 'row', justifyContent: 'space-evenly'}}>
-            <Btn title="Tareas" onPress={() => handleNavigate('task stack')} />
-            <Btn title="Notas" onPress={() => handleNavigate('note stack')} />
+            <Btn
+              title="Tareas"
+              onPress={() => handleNavigate('task stack')}
+              style={{...styles.btnContainer, width: 125}}
+            />
+            <Btn
+              title="Notas"
+              onPress={() => handleNavigate('note stack')}
+              style={{...styles.btnContainer, width: 125, marginHorizontal: 15}}
+            />
+            <Btn
+              title="Archivos"
+              style={{...styles.btnContainer, width: 125}}
+              onPress={() => handleNavigate('files stack')}
+            />
           </View>
           <View style={{alignItems: 'center'}}>
             <Btn

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import CreateLesson from '../screens/CreateLesson';
 import Note from '../screens/Note';
@@ -9,10 +9,16 @@ import Schedule from '../screens/Schedule';
 import ImageScreen from '../screens/ImageScreen';
 import BottomRoutes from './BottomRoutes';
 import SearchScreen from '../screens/SearchScreen';
+import MeetScreen from '../screens/MeetScreen';
+import {getNotifications} from '../utils/notifications';
+import FilesScreen from '../screens/FilesScreen';
 
 const Stack = createStackNavigator();
 
 const TaskRoutes = () => {
+  useEffect(() => {
+    getNotifications();
+  }, []);
   return (
     <Stack.Navigator
       screenOptions={{headerShown: false}}
@@ -26,6 +32,8 @@ const TaskRoutes = () => {
       <Stack.Screen name="schedule" component={Schedule} />
       <Stack.Screen name="image screen" component={ImageScreen} />
       <Stack.Screen name="search screen" component={SearchScreen} />
+      <Stack.Screen name="meet screen" component={MeetScreen} />
+      <Stack.Screen name="files stack" component={FilesScreen} />
     </Stack.Navigator>
   );
 };

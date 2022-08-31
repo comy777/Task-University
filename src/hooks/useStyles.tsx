@@ -249,7 +249,7 @@ const useStyles = () => {
       padding: 10,
       fontSize: 18,
       height: 44,
-      backgroundColor: colors.listItem,
+      backgroundColor: colors.background,
       color: colors.text,
     },
     calendar: {
@@ -272,11 +272,11 @@ const useStyles = () => {
       marginBottom: 5,
     },
     colorContainer: {
-      height: 345,
+      height: 375,
       width: 375,
-      backgroundColor: 'white',
+      backgroundColor: colors.background,
       marginHorizontal: 15,
-      padding: 5,
+      padding: 15,
     },
     imageScreenBg: {flex: 1, backgroundColor: colors.background},
     imageBottomScreen: {

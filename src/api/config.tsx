@@ -3,7 +3,7 @@ import {getData} from '../utils/storage';
 
 const baseURL = 'https://task-university.herokuapp.com/';
 
-const localhost = 'http://192.168.100.4:5050/';
+const localhost = 'http://192.168.100.8:5050/';
 
 export const apiTask = axios.create({
   baseURL,

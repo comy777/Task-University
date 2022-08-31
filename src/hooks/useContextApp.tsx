@@ -2,7 +2,11 @@ import {useContext} from 'react';
 import {useColorScheme} from 'react-native';
 import {AppContext} from '../context/AppContext';
 import {getData, saveData} from '../utils/storage';
-import {getDataTasks, showNotification} from '../utils/notifications';
+import {
+  getDataTasks,
+  showNotification,
+  getDataMeets,
+} from '../utils/notifications';
 import moment from 'moment';
 
 const useContextApp = () => {
@@ -31,9 +35,7 @@ const useContextApp = () => {
       setTheme();
     } else {
       validateThemeSystem();
-      return;
     }
-    validateThemeSystem();
   };
   const validateThemeSystem = () => {
     if (themeSystem) {
@@ -63,28 +65,6 @@ const useContextApp = () => {
     }
   };
 
-  const getTasks = async () => {
-    const data = await getDataTasks();
-    let bandera: boolean = false;
-    if (!data) return;
-    data.forEach((item, i) => {
-      const {dayLimit} = item;
-      const newDate = moment(dayLimit);
-      const diferencia = newDate.diff(new Date(Date.now()), 'days');
-      if (diferencia <= 5 && diferencia >= 0) {
-        bandera = true;
-        return;
-      }
-      if (bandera) return;
-    });
-    if (bandera) {
-      showNotification({
-        title: 'Tarea',
-        message: 'Tiene tareas a punto de vencerse',
-      });
-    }
-  };
-
   return {
     themeDark,
     setTheme,
@@ -100,7 +80,6 @@ const useContextApp = () => {
     handleSetTheme,
     themeSystem,
     handleGetTheme,
-    getTasks,
     setSearchVisible,
   };
 };

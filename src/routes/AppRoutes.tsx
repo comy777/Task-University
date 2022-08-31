@@ -13,15 +13,16 @@ const AppRoutes = () => {
   const {themeDark, token, handleGetTheme} = useContextApp();
   const {handleGetToken} = useUser();
   const theme = useColorScheme();
+
   useEffect(() => {
     SplashScreen.hide();
   }, []);
   useEffect(() => {
-    handleGetToken();
-  }, [token]);
-  useEffect(() => {
     handleGetTheme();
   }, [theme]);
+  useEffect(() => {
+    handleGetToken();
+  }, [token]);
 
   return (
     <NavigationContainer theme={themeDark ? Dark : Default}>

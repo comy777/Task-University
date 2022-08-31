@@ -1,6 +1,6 @@
 import {StackScreenProps} from '@react-navigation/stack';
 import {ImageStyle, StyleProp, TextStyle, ViewStyle} from 'react-native';
-import {Lesson, Note} from '../interfaces/response';
+import {File, Lesson, Note} from '../interfaces/response';
 import {ActiveData} from './data';
 import {Task, User} from './response';
 
@@ -29,12 +29,14 @@ export interface FabProps {
   loading?: boolean;
   fabGroup?: boolean;
   fabNote?: boolean;
+  fabFile?: boolean;
   styleBg?: boolean;
   handleSave?: () => void;
   handleCamera?: () => void;
   handleGalery?: () => void;
   handleCalendar?: () => void;
   handleColor?: () => void;
+  handleFile?: () => void;
 }
 
 export interface LoadingComponentProps {
@@ -58,6 +60,8 @@ export interface DayProps {
 
 export interface ModalProps {
   children: any;
+  visible: boolean;
+  setVisible: () => void;
 }
 
 export interface SchedlueProps {
@@ -136,7 +140,25 @@ export interface ColorProps {
   colorItem: string;
 }
 
-export type ScreenStack = 'note stack' | 'task stack';
+export interface FilePicker {
+  name: string;
+  size: number | null;
+  type: string | null;
+  uri: string;
+  icon?: string;
+}
+
+export interface FileState {
+  files: File[];
+  loading: boolean;
+  visible: boolean;
+  filePicker: FilePicker | undefined;
+  modal: boolean;
+  loadingFile: boolean;
+  activeFile: File | undefined;
+}
+
+export type ScreenStack = 'note stack' | 'task stack' | 'files stack';
 
 export type RootStack = {
   'home stack': undefined;
@@ -148,6 +170,8 @@ export type RootStack = {
   schedule: undefined;
   'image screen': {images: ImageDataProps[]; image: ImageDataProps};
   'search screen': undefined;
+  'meet screen': undefined;
+  'files stack': {id: string};
 };
 
 export interface AuthProps extends StackScreenProps<any, any> {}
@@ -172,6 +196,12 @@ export interface CreateTaskScreenProps
 
 export interface ImageScreenProps
   extends StackScreenProps<RootStack, 'image screen'> {}
+
+export interface ScheduleScreenProps
+  extends StackScreenProps<RootStack, 'schedule'> {}
+
+export interface FilesScreenProps
+  extends StackScreenProps<RootStack, 'files stack'> {}
 
 export interface UseAuthProps extends StackScreenProps<any, any> {
   type: string;

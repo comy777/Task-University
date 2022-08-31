@@ -1,6 +1,8 @@
 import notifee, {AndroidGroupAlertBehavior} from '@notifee/react-native';
-import {appGetLessons, appGetTasks} from '../api/request';
+import {appGetLessons, appGetTasks, appGetMeets} from '../api/request';
 import {Task} from '../interfaces/response';
+import moment from 'moment';
+import {validateDiffDateMeet} from './validate';
 
 interface Props {
   title: string;
@@ -65,4 +67,43 @@ export const getDataTasks = async (): Promise<Task[] | undefined> => {
       if (i === lessons.length - 1) resolve(tareas);
     });
   });
+};
+
+export const getDataMeets = async () => {
+  const resp = await appGetMeets();
+  let bandera = false;
+  resp.forEach(item => {
+    if (bandera) return;
+    const {date_meet} = item;
+    const validateDay = validateDiffDateMeet(date_meet);
+    if (validateDay) {
+      bandera = true;
+      return;
+    }
+  });
+  if (bandera)
+    showNotification({title: 'Reunion', message: 'Tiene reuniones pendientes'});
+};
+
+export const getNotifications = async () => {
+  await getDataMeets();
+  const data = await getDataTasks();
+  let bandera: boolean = false;
+  if (!data) return;
+  data.forEach((item, i) => {
+    if (bandera) return;
+    const {dayLimit} = item;
+    const newDate = moment(dayLimit);
+    const diferencia = newDate.diff(new Date(Date.now()), 'days');
+    if (diferencia <= 5 && diferencia >= 0) {
+      bandera = true;
+      return;
+    }
+  });
+  if (bandera) {
+    showNotification({
+      title: 'Tarea',
+      message: 'Tiene tareas a punto de vencerse',
+    });
+  }
 };

@@ -16,7 +16,7 @@ import Lottie from 'lottie-react-native';
 const Home = ({navigation}: HomeScreenProps) => {
   const {lessons, styles, loading, setVisibleTabBar, handleGetLessons} =
     useApp();
-  const {children, day, activeData, getTasks} = useContextApp();
+  const {children, day, activeData, modal, setModal} = useContextApp();
   const {handleNavigateEdit, handleShowDelete} = useNotes();
   useFocusEffect(
     useCallback(() => {
@@ -26,9 +26,6 @@ const Home = ({navigation}: HomeScreenProps) => {
   );
   useEffect(() => {
     handleGetLessons();
-  }, []);
-  useEffect(() => {
-    getTasks();
   }, []);
 
   if (loading) return <Loading />;
@@ -62,7 +59,7 @@ const Home = ({navigation}: HomeScreenProps) => {
         )}
         showsVerticalScrollIndicator={false}
       />
-      <ModalComponent>
+      <ModalComponent visible={modal} setVisible={setModal}>
         {children === 'lesson' ? (
           <Schedlue title={day} />
         ) : children === 'user' ? (

@@ -1,10 +1,9 @@
-import React, {useEffect} from 'react';
-import {View, TextInput, useColorScheme} from 'react-native';
+import React from 'react';
+import {View, TextInput} from 'react-native';
 import InputIcon from '../../components/InputIcon';
 import useAuth from '../../hooks/useAuth';
 import Btn from '../../components/Btn';
 import {AuthProps} from '../../interfaces/components';
-import useContextApp from '../../hooks/useContextApp';
 
 const Login = (props: AuthProps) => {
   const {
@@ -18,15 +17,7 @@ const Login = (props: AuthProps) => {
     setVisible,
     loadingAuth,
   } = useAuth({...props, type: 'login'});
-  const {setTheme, themeDark} = useContextApp();
-  const theme = useColorScheme();
-  useEffect(() => {
-    if (theme === 'dark') {
-      if (!themeDark) setTheme();
-    } else {
-      if (themeDark) setTheme();
-    }
-  }, []);
+
   return (
     <View style={styles.containerCenter}>
       <TextInput

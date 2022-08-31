@@ -9,6 +9,7 @@ import {showToast} from './toast';
 import {DayProps} from '../interfaces/components';
 import {Schedlue} from '../interfaces/response';
 import moment from 'moment';
+import {DataMeetForm} from '../interfaces/data';
 
 export const formDataAuth = (value: string) => {
   const form =
@@ -142,4 +143,50 @@ export const validateDayLimit = (dayLimit: string): string => {
   const diferencia = newDate.diff(new Date(Date.now()), 'days');
   if (diferencia <= 5) return '#FF5252';
   return '#FF9800';
+};
+
+export const validateDiffDate = (e: Date) => {
+  const fechaActual = moment();
+  if (moment(e).diff(fechaActual, 'days') < 0) {
+    showToast('La fecha no es valida');
+    return false;
+  }
+  if (
+    moment(e).diff(fechaActual, 'hours') < 0 ||
+    moment(e).diff(fechaActual, 'minutes') < 0
+  ) {
+    showToast('La hora no es valida');
+    return false;
+  }
+  const date = moment(e).format('YYYY-MM-DD');
+  const hour = moment(e).format('LT');
+  return {date, hour};
+};
+
+export const validateDiffDateMeet = (e: string) => {
+  const fechaActual = moment();
+  if (moment(e).diff(fechaActual, 'days') === 0) {
+    return true;
+  }
+  if (moment(e).diff(fechaActual, 'hours') === 1) {
+    return true;
+  }
+  return false;
+};
+
+export const validateFormMeet = (data: DataMeetForm) => {
+  const {meet, date_meet, start_time} = data;
+  if (!meet) {
+    showToast('El nombre de la reunion es obligatorio');
+    return;
+  }
+  if (!date_meet) {
+    showToast('La fecha de la reunion es obligatoria');
+    return;
+  }
+  if (!start_time) {
+    showToast('La hora de la reunion es obligatoria');
+    return;
+  }
+  return true;
 };

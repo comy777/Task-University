@@ -22,10 +22,12 @@ import {showAlert} from '../utils/toast';
 import moment from 'moment';
 import {appPutTasks, appPutNotes} from '../api/request';
 import {useState} from 'react';
+import useStyles from './useStyles';
 
 const useNotes = () => {
   const navigation = useNavigation();
-  const [color, setColor] = useState('white');
+  const {colors} = useStyles();
+  const [color, setColor] = useState(colors.background);
   const {
     loading,
     setLoading,

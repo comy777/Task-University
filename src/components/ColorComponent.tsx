@@ -1,31 +1,13 @@
-import React, {useContext, useEffect, useMemo, useRef} from 'react';
+import React, {useMemo} from 'react';
 import {View, FlatList, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {colorsPalette} from '../utils/colors';
 import {ColorComponentProps, ColorProps} from '../interfaces/components';
 import Btn from './Btn';
-import useStyles from '../hooks/useStyles';
-import {AppContext} from '../context/AppContext';
+import useUtils from '../hooks/useUtils';
 
 const ColorComponent = ({setColor, color}: ColorComponentProps) => {
-  const {styles, colors} = useStyles();
-  const {appState} = useContext(AppContext);
-  const {setVisibleColor} = appState;
-  const ref = useRef<FlatList>(null);
-  const getIndexColor = () => {
-    const totalFilas = colorsPalette.length;
-    let index = 0;
-    colorsPalette.forEach((item, i) => {
-      if (item === color) index = i;
-    });
-    const fila = index / 5 - 1;
-    if (fila > totalFilas) return;
-    if (!ref.current) return;
-    ref.current.scrollToIndex({animated: true, index: fila});
-  };
-  useEffect(() => {
-    getIndexColor();
-  }, []);
+  const {colors, styles, ref, setVisibleColor} = useUtils({color});
   const Color = ({colorItem}: ColorProps) => {
     return useMemo(
       () => (
@@ -58,6 +40,9 @@ const ColorComponent = ({setColor, color}: ColorComponentProps) => {
             contentContainerStyle={{flexDirection: 'column'}}
             numColumns={5}
             showsVerticalScrollIndicator={false}
+            getItemLayout={(data, index) => {
+              return {length: 70, offset: 70 * index, index};
+            }}
           />
           <Btn title="Cerrar" onPress={setVisibleColor} />
         </View>

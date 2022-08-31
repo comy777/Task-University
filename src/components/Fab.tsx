@@ -13,12 +13,14 @@ const Fab = ({
   loading,
   fabGroup,
   fabNote,
+  fabFile,
   styleBg,
   handleCalendar,
   handleCamera,
   handleGalery,
   handleSave,
   handleColor,
+  handleFile,
 }: FabProps) => {
   const {styles} = useStyles();
   return (
@@ -127,6 +129,55 @@ const Fab = ({
                 />
               </TouchableOpacity>
             </View>
+          </View>
+        </View>
+      )}
+      {fabFile && (
+        <View style={styles.fabContainerIcons}>
+          <View
+            style={{
+              ...styles.fabContainer,
+              height: 50,
+              width: 50,
+              marginBottom: 5,
+            }}>
+            <TouchableOpacity activeOpacity={0.7} onPress={handleSave}>
+              <Lottie
+                source={require('../animations/96027-save-icon-floppy-disk.json')}
+                autoPlay
+                style={{height: 35, width: 35}}
+              />
+            </TouchableOpacity>
+          </View>
+          <View
+            style={{
+              ...styles.fabContainer,
+              height: 50,
+              width: 50,
+              marginBottom: 5,
+            }}>
+            <TouchableOpacity activeOpacity={0.7} onPress={() => {}}>
+              <Lottie
+                source={require('../animations/12095-create-folder.json')}
+                autoPlay
+                style={{height: 35, width: 35}}
+              />
+            </TouchableOpacity>
+          </View>
+          <View
+            style={{
+              ...styles.fabContainer,
+              height: 50,
+              width: 50,
+              marginBottom: 5,
+            }}>
+            <TouchableOpacity activeOpacity={0.7} onPress={handleFile}>
+              <Lottie
+                source={require('../animations/108152-file-documents-searching-and-find.json')}
+                autoPlay
+                style={{height: 35, width: 35}}
+              />
+            </TouchableOpacity>
           </View>
         </View>
       )}

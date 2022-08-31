@@ -64,5 +64,12 @@ export interface ActiveData {
 
 export type RequestGet = 'notes' | 'tasks';
 
+export interface DataMeetForm {
+  meet: string;
+  link?: string;
+  date_meet: string;
+  start_time: string;
+}
+
 export const imageLesson =
   'https://www.gndiario.com/sites/default/files/styles/noticia_detalle_noticia_2_1/public/noticias/CLASES.jpg?itok=_5grhFgh';

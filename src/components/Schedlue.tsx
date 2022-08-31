@@ -20,6 +20,7 @@ const Schedlue = ({title}: SchedlueProps) => {
           placeholder="Salon"
           value={classroom}
           onChangeText={value => handleChangeText(value, 'classroom')}
+          autoFocus
         />
         <Picker
           selectedValue={schedlue}

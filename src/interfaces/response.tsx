@@ -33,6 +33,7 @@ export interface GetResponse {
   notes?: Note[];
   tasks?: Task[];
   schedlue?: SchedlueApi[];
+  meets?: Meet[];
   error?: string;
 }
 
@@ -138,4 +139,43 @@ export interface SearchResponse {
   complete?: boolean;
   images?: any[];
   dayLimit?: string;
+}
+
+export interface MeetsResponse {
+  meet: Meet;
+  msg?: string;
+  error?: string;
+}
+
+export interface Meet {
+  _id: string;
+  meet: string;
+  date_meet: string;
+  start_time: string;
+  link: string;
+}
+
+export interface FilesResponse {
+  files: File[];
+}
+
+export interface FileResponse {
+  file: File;
+  error?: string;
+}
+
+export interface File {
+  filename: string;
+  file: string;
+  lesson: string;
+  refFile: string;
+  _id: string;
+  type: string;
+  createdAt: string;
+  updatedAt: string;
+  image: string;
+}
+
+export interface GetIcon {
+  icon: string;
 }
