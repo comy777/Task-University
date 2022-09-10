@@ -8,45 +8,14 @@ import {showToast} from '../utils/toast';
 import {ImageDataProps} from '../interfaces/components';
 import {Image} from '../interfaces/response';
 import {apiTask} from '../api/config';
-import {
-  check,
-  openSettings,
-  PERMISSIONS,
-  PermissionStatus,
-  request,
-} from 'react-native-permissions';
+import usePermissions from './usePermissions';
 
 const useImages = () => {
   const [images, setImages] = useState<ImageDataProps[]>([]);
   const [image, setImage] = useState<ImageDataProps>();
   const [imagesDelete, setImagesDelete] = useState<Image[]>([]);
   const [activeImages, setActiveImages] = useState<Image[]>([]);
-
-  const getPermissions = async (type: string): Promise<PermissionStatus> => {
-    let resp: PermissionStatus = 'denied';
-    if (type === 'camera') {
-      resp = await request(PERMISSIONS.ANDROID.CAMERA);
-    }
-    if (type === 'galery') {
-      resp = await request(PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE);
-    }
-    return resp;
-  };
-
-  const checkPermissions = async (type: string): Promise<PermissionStatus> => {
-    let resp: PermissionStatus = 'denied';
-    if (type === 'camera') {
-      resp = await check(PERMISSIONS.ANDROID.CAMERA);
-      if (resp === 'denied') resp = await getPermissions(type);
-      if (resp === 'blocked') await openSettings();
-    }
-    if (type === 'galery') {
-      resp = await check(PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE);
-      if (resp === 'denied') resp = await getPermissions(type);
-      if (resp === 'blocked') await openSettings();
-    }
-    return resp;
-  };
+  const {checkPermissions} = usePermissions();
 
   const getImagesGalery = async () => {
     const respPermissions = await checkPermissions('galery');
@@ -81,7 +50,7 @@ const useImages = () => {
     return new Promise(reject => {
       const dataResponse: Image[] = [];
       let contador = 0;
-      images.map(async (item, index) => {
+      images.forEach(async item => {
         if (item.fileName) {
           const {fileName, type, uri} = item;
           const fileUpload = {name: fileName, uri, type};
@@ -91,7 +60,7 @@ const useImages = () => {
           dataResponse[contador] = {url: resp.data.url};
           contador += 1;
         }
-        if (index === images.length - 1) reject(dataResponse);
+        if (contador === images.length) reject(dataResponse);
       });
     });
   };

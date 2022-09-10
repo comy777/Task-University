@@ -1,8 +1,7 @@
 import {StackScreenProps} from '@react-navigation/stack';
 import {ImageStyle, StyleProp, TextStyle, ViewStyle} from 'react-native';
-import {File, Lesson, Note} from '../interfaces/response';
+import {File, Folder, Lesson, Note, Task, User} from '../interfaces/response';
 import {ActiveData} from './data';
-import {Task, User} from './response';
 
 export interface InputIconProps {
   icon: string;
@@ -37,6 +36,8 @@ export interface FabProps {
   handleCalendar?: () => void;
   handleColor?: () => void;
   handleFile?: () => void;
+  handleFolder?: () => void;
+  createFolder?: boolean;
 }
 
 export interface LoadingComponentProps {
@@ -145,17 +146,60 @@ export interface FilePicker {
   size: number | null;
   type: string | null;
   uri: string;
-  icon?: string;
+}
+
+export interface DataFiles {
+  id: string;
+  name: string;
+  icon: string;
+  type: ActiveDataFile;
+  file?: string;
 }
 
 export interface FileState {
-  files: File[];
   loading: boolean;
   visible: boolean;
-  filePicker: FilePicker | undefined;
   modal: boolean;
   loadingFile: boolean;
-  activeFile: File | undefined;
+  icon: string;
+  activeDataType: ActiveDataFile;
+  filePicker: FilePicker | undefined;
+  data: DataFiles[];
+  id: string | undefined;
+}
+
+export interface FileComponentProps {
+  data: DataFiles;
+  onPress: (file: DataFiles) => void;
+  handleNavigate: (id: string) => void;
+}
+
+export type ActiveDataFile =
+  | 'folder'
+  | 'file'
+  | 'filepicker'
+  | 'create folder'
+  | undefined;
+
+export interface FolderComponentProps {
+  data: Folder;
+  onPress: () => void;
+  editFolder: (folder: Folder) => void;
+}
+
+export interface FilesUseHook {
+  lesson: string;
+  folder?: string;
+}
+
+export interface DeleteFileProps {
+  file?: string;
+  folder?: string;
+}
+
+export interface StateFile {
+  file?: File;
+  folder?: Folder;
 }
 
 export type ScreenStack = 'note stack' | 'task stack' | 'files stack';
@@ -172,6 +216,7 @@ export type RootStack = {
   'search screen': undefined;
   'meet screen': undefined;
   'files stack': {id: string};
+  'folder stack': {lesson: string; folder: string};
 };
 
 export interface AuthProps extends StackScreenProps<any, any> {}
@@ -202,6 +247,9 @@ export interface ScheduleScreenProps
 
 export interface FilesScreenProps
   extends StackScreenProps<RootStack, 'files stack'> {}
+
+export interface FolderScreenProps
+  extends StackScreenProps<RootStack, 'folder stack'> {}
 
 export interface UseAuthProps extends StackScreenProps<any, any> {
   type: string;

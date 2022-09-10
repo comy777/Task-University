@@ -1,16 +1,17 @@
 import React, {useEffect} from 'react';
-import {View, FlatList} from 'react-native';
-import {FilesScreenProps} from '../interfaces/components';
+import {View} from 'react-native';
 import Loading from '../components/Loading';
-import FileComponent from '../components/FileComponent';
-import Fab from '../components/Fab';
+import {FolderScreenProps} from '../interfaces/components';
 import useStyles from '../hooks/useStyles';
-import ModalComponent from '../components/Modal';
 import useFiles from '../hooks/useFiles';
+import {FlatList} from 'react-native-gesture-handler';
+import FileComponent from '../components/FileComponent';
+import ModalComponent from '../components/Modal';
 import ModalFileComponent from '../components/ModalFileComponent';
+import Fab from '../components/Fab';
 
-const FileScreen = ({route}: FilesScreenProps) => {
-  const {id} = route.params;
+const FolderScreen = ({route}: FolderScreenProps) => {
+  const {lesson, folder} = route.params;
   useEffect(() => {
     getData();
   }, []);
@@ -35,7 +36,7 @@ const FileScreen = ({route}: FilesScreenProps) => {
     data,
     getData,
     handleEditData,
-  } = useFiles({lesson: id});
+  } = useFiles({lesson, folder});
   const {styles} = useStyles();
   if (loading) return <Loading />;
   return (
@@ -79,10 +80,9 @@ const FileScreen = ({route}: FilesScreenProps) => {
         onPress={handleVisible}
         handleFile={handleFile}
         handleFolder={handleCreateFolder}
-        createFolder={true}
       />
     </View>
   );
 };
 
-export default FileScreen;
+export default FolderScreen;

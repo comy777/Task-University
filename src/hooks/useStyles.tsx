@@ -285,6 +285,9 @@ const useStyles = () => {
       marginRight: 10,
       borderRadius: 12,
     },
+    modalFile: {
+      width: 250,
+    },
   });
   return {
     styles,

@@ -1,30 +1,45 @@
 import React, {useMemo} from 'react';
 import {View, Text, Image, TouchableOpacity} from 'react-native';
-import {File} from '../interfaces/response';
+import Icon from 'react-native-vector-icons/Ionicons';
 import useStyles from '../hooks/useStyles';
+import {FileComponentProps} from '../interfaces/components';
 
-interface Props {
-  file: File;
-  onPress: (file: File) => void;
-}
-
-const FileComponent = ({file, onPress}: Props) => {
-  const {filename, image} = file;
+const FileComponent = ({data, onPress, handleNavigate}: FileComponentProps) => {
+  const {name, icon, type, id} = data;
   const {styles} = useStyles();
+  const handleClick = () => {
+    if (type === 'file') onPress(data);
+    if (type === 'folder') handleNavigate(id);
+  };
   return useMemo(
     () => (
-      <TouchableOpacity activeOpacity={0.7} onPress={() => onPress(file)}>
-        <View style={{...styles.cardNote, height: 195}}>
-          <Image source={{uri: image}} style={{height: 150, width: 150}} />
-          <Text
-            style={{textAlign: 'center', marginTop: 5, fontWeight: 'bold'}}
-            numberOfLines={1}>
-            {filename}
+      <View style={{...styles.cardNote, height: 215}}>
+        <TouchableOpacity activeOpacity={0.7} onPress={handleClick}>
+          <Image source={{uri: icon}} style={{height: 150, width: 150}} />
+        </TouchableOpacity>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-around',
+            height: 35,
+            alignItems: 'center',
+          }}>
+          <Text style={{fontWeight: 'bold'}} numberOfLines={1}>
+            {name}
           </Text>
+          {type === 'folder' && (
+            <View style={{marginTop: 2}}>
+              <Icon
+                name="menu-outline"
+                size={24}
+                onPress={() => onPress(data)}
+              />
+            </View>
+          )}
         </View>
-      </TouchableOpacity>
+      </View>
     ),
-    [file],
+    [data],
   );
 };
 

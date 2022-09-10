@@ -12,6 +12,7 @@ import SearchScreen from '../screens/SearchScreen';
 import MeetScreen from '../screens/MeetScreen';
 import {getNotifications} from '../utils/notifications';
 import FilesScreen from '../screens/FilesScreen';
+import FolderScreen from '../screens/FolderScreen';
 
 const Stack = createStackNavigator();
 
@@ -34,6 +35,7 @@ const TaskRoutes = () => {
       <Stack.Screen name="search screen" component={SearchScreen} />
       <Stack.Screen name="meet screen" component={MeetScreen} />
       <Stack.Screen name="files stack" component={FilesScreen} />
+      <Stack.Screen name="folder stack" component={FolderScreen} />
     </Stack.Navigator>
   );
 };

@@ -4,6 +4,8 @@ import {
   DeleteResponse,
   File,
   FileResponse,
+  Folder,
+  GetFoldersResponse,
   GetResponse,
   Meet,
   SchedlueResponse,
@@ -25,6 +27,7 @@ import {
   FilesResponse,
 } from '../interfaces/response';
 import {DataMeetForm} from '../interfaces/data';
+import {FolderPostResponse} from '../interfaces/response';
 import {
   Note,
   Task,
@@ -250,8 +253,12 @@ export const getFaticons = async (query: string): Promise<GetIcon> => {
   const {icon} = data;
   return {icon};
 };
-export const appFilesRequest = async (id: string) => {
-  const {data} = await apiTask.get<FilesResponse>(`upload/file/${id}`);
+export const appFilesRequest = async (url: string) => {
+  const {data} = await apiTask.get<FilesResponse>(url);
+  if (data.error) {
+    showToast(data.error);
+    return;
+  }
   return data.files;
 };
 
@@ -268,8 +275,8 @@ export const appFilesPostRequest = async (
   return data.file;
 };
 
-export const appFilesDeleteRequest = async (id: string): Promise<boolean> => {
-  const {data} = await apiTask.delete<DefaultResponse>(`upload/file/${id}`);
+export const appFilesDeleteRequest = async (url: string): Promise<boolean> => {
+  const {data} = await apiTask.delete<DefaultResponse>(url);
   if (data.error) {
     showToast(data.error);
     return false;
@@ -281,7 +288,75 @@ export const appFilesDeleteRequest = async (id: string): Promise<boolean> => {
   return false;
 };
 
-export const appGetFileDownload = async (link: string) => {
-  const resp = await apiTask.get(link);
-  console.log(resp.data);
+export const appGetFolders = async (
+  lesson: string,
+): Promise<Folder[] | undefined> => {
+  const {data} = await apiTask.get<GetFoldersResponse>(`folders/${lesson}`);
+  if (data.error) {
+    showToast(data.error);
+    return;
+  }
+  return data.folders;
+};
+
+export const appPostFolder = async (
+  id: string,
+  folder: string,
+): Promise<Folder | undefined> => {
+  const dataPost = {folder};
+  const {data} = await apiTask.post<FolderPostResponse>(
+    `folders/${id}`,
+    dataPost,
+  );
+  if (data.error) {
+    showToast(data.error);
+    return;
+  }
+  return data.folder;
+};
+
+export const appGetFilesByFolder = async (
+  id: string,
+): Promise<File[] | undefined> => {
+  const {data} = await apiTask.get<FilesResponse>(`folders/folder/${id}`);
+  if (data.error) {
+    showToast(data.error);
+    return;
+  }
+  return data.files;
+};
+
+export const appPostFileWithFolder = async (
+  lesson: string,
+  folder: string,
+  file: FormData,
+): Promise<File | undefined> => {
+  const {data} = await apiTask.post<FileResponse>(
+    `upload/file/${lesson}/${folder}`,
+    file,
+  );
+  if (data.error) {
+    showToast(data.error);
+    return;
+  }
+  return data.file;
+};
+
+export const appUpdateFolder = async (url: string, filename: string) => {
+  const {data} = await apiTask.put<FolderPostResponse>(url, {folder: filename});
+  if (data.error) {
+    showToast(data.error);
+    return;
+  }
+  return data.folder;
+};
+
+export const appUpdateFile = async (id: string, filename: string) => {
+  const file = {filename};
+  const {data} = await apiTask.put<FileResponse>(`upload/file/${id}`, file);
+  if (data.error) {
+    showToast(data.error);
+    return;
+  }
+  return data.file;
 };

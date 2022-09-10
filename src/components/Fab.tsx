@@ -21,6 +21,8 @@ const Fab = ({
   handleSave,
   handleColor,
   handleFile,
+  handleFolder,
+  createFolder,
 }: FabProps) => {
   const {styles} = useStyles();
   return (
@@ -134,36 +136,23 @@ const Fab = ({
       )}
       {fabFile && (
         <View style={styles.fabContainerIcons}>
-          <View
-            style={{
-              ...styles.fabContainer,
-              height: 50,
-              width: 50,
-              marginBottom: 5,
-            }}>
-            <TouchableOpacity activeOpacity={0.7} onPress={handleSave}>
-              <Lottie
-                source={require('../animations/96027-save-icon-floppy-disk.json')}
-                autoPlay
-                style={{height: 35, width: 35}}
-              />
-            </TouchableOpacity>
-          </View>
-          <View
-            style={{
-              ...styles.fabContainer,
-              height: 50,
-              width: 50,
-              marginBottom: 5,
-            }}>
-            <TouchableOpacity activeOpacity={0.7} onPress={() => {}}>
-              <Lottie
-                source={require('../animations/12095-create-folder.json')}
-                autoPlay
-                style={{height: 35, width: 35}}
-              />
-            </TouchableOpacity>
-          </View>
+          {createFolder && (
+            <View
+              style={{
+                ...styles.fabContainer,
+                height: 50,
+                width: 50,
+                marginBottom: 5,
+              }}>
+              <TouchableOpacity activeOpacity={0.7} onPress={handleFolder}>
+                <Lottie
+                  source={require('../animations/12095-create-folder.json')}
+                  autoPlay
+                  style={{height: 35, width: 35}}
+                />
+              </TouchableOpacity>
+            </View>
+          )}
           <View
             style={{
               ...styles.fabContainer,

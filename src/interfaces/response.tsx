@@ -157,6 +157,7 @@ export interface Meet {
 
 export interface FilesResponse {
   files: File[];
+  error?: string;
 }
 
 export interface FileResponse {
@@ -174,8 +175,33 @@ export interface File {
   createdAt: string;
   updatedAt: string;
   image: string;
+  folder: string;
 }
 
 export interface GetIcon {
   icon: string;
+}
+
+export interface GetFoldersResponse {
+  folders: Folder[];
+  error?: string;
+}
+
+export interface Folder {
+  _id: string;
+  folder: string;
+  files: File[];
+  lesson: string;
+  createdAt: string;
+  updatedAt: string;
+  icon: string;
+}
+
+export interface File {
+  file: string;
+}
+
+export interface FolderPostResponse {
+  folder: Folder;
+  error?: string;
 }
