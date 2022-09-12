@@ -34,6 +34,7 @@ import {
 import {StateFile} from '../interfaces/components';
 import {appUpdateFile} from '../api/request';
 import usePermissions from './usePermissions';
+import {defaultIcon} from '../utils/storage';
 
 const useFiles = ({lesson, folder}: FilesUseHook) => {
   const navigation = useNavigation();
@@ -44,7 +45,7 @@ const useFiles = ({lesson, folder}: FilesUseHook) => {
     visible: false,
     modal: false,
     loadingFile: false,
-    icon: 'https://cdn-icons-png.flaticon.com/512/716/716784.png',
+    icon: defaultIcon,
     activeDataType: undefined,
     filePicker: undefined,
     data: [],
@@ -77,7 +78,17 @@ const useFiles = ({lesson, folder}: FilesUseHook) => {
 
   const handleVisible = () => setState({...state, visible: !state.visible});
 
-  const handleModal = () => setState({...state, modal: false});
+  const handleModal = () => {
+    resetFormValues({fileNameForm: ''});
+    setState({
+      ...state,
+      modal: false,
+      icon: defaultIcon,
+      activeDataType: undefined,
+      filePicker: undefined,
+      id: undefined,
+    });
+  };
 
   const handleFile = async () => {
     try {

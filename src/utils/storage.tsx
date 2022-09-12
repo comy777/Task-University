@@ -46,3 +46,6 @@ export const dataSchedlue = [
   {id: '7', schedlue: '6:00 - 7:30 PM'},
   {id: '8', schedlue: '7:30 - 9:45 PM'},
 ];
+
+export const defaultIcon =
+  'https://cdn-icons-png.flaticon.com/512/716/716784.png';
